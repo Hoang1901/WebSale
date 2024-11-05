@@ -1,0 +1,41 @@
+<link href="~/css/cart.css" rel="stylesheet" />
+
+@model WebPhone.Models.Cart
+
+<h1>Giỏ Hàng</h1>
+
+@if (Model.Items.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Tổng</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.ProductName</td>
+                    <td>@item.Price.ToString("C")</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Total)</td>
+                    <td>
+                        <a href="@Url.Action("RemoveFromCart", "Cart", new { productId = item.ProductId })" class="btn btn-danger">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Tổng tiền: @Model.GetTotal().ToString("C")</h3>
+    <a href="#" class="btn btn-success">Thanh toán</a>
+}
+else
+{
+    <p>Giỏ hàng của bạn trống!</p>
+}
